@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Admin panel</title>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- CSS -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+  <!-- Default theme -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+</head>
+<body>
+<!-Основной контейнер-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="w-100 p-3">
+          <div class="col-12">
+
+            <!--nav bar-->
+            <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+              <a class="navbar-brand font-weight-bold" id="headerName" >
+                <div></div>
+              </a>
+              <a class="navbar-brand">with roles: </a>
+              <a class="navbar-brand" id="headerRoles"></a>
+              <div class="collapse navbar-collapse d-flex justify-content-end navbar-nav" id="navbarSupportedContent">
+                <a class="nav-link" href="/logout">Logout</a>
+              </div>
+            </nav>
+
+            <br>
+
+            <div class="row">
+
+              <!--admin-user switch menu-->
+
+              <div class="col-2">
+                <ul class="nav flex-column nav-pills">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/admin">Admin</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link"  href="/admin/profile">User</a>
+                  </li>
+                </ul>
+              </div>
+
+              <!--main info-->
+
+              <div class="col-md-10">
+
+                <!--main header-->
+
+                <div class="page-header">
+                  <h1>
+                    Admin panel
+                  </h1>
+                </div>
+
+                <!--User-table and New-user switch-->
+
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admin">User table</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="admin/new">New User</a>
+                  </li>
+                </ul>
+
+                <div id="tables-holder">
+                  <div class="border">
+                    <table class="table border" >
+                      <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Add new user</th>
+                      </tr>
+                      </thead>
+                    </table>
+
+                    <div class="col-md-10">
+                      <div class="row">
+
+                        <div class="col-md-4">
+                        </div>
+
+                        <!--Расположение формы ввода в средней колонке-->
+                        <div class="col-md-4">
+
+                          <!--Форма ввода для нового пользователя-->
+                           <form id="newUserForm" name="newUserForm">>
+
+                              <div class="form-group">
+                                <div style="text-align: center">
+                                  <label for="newUserUsername"><b>Username</b></label>
+                                </div>
+                                <input type="text"
+                                       class="form-control"
+                                       id="newUserUsername"
+                                       placeholder="Username"/>
+                              </div>
+
+                              <div class="form-group">
+                                <div style="text-align: center">
+                                  <label for="newUserAge"><b>Age</b></label>
+                                </div>
+                                <input type="number"
+                                       class="form-control"
+                                       id="newUserAge"
+                                       placeholder="Age"/>
+                              </div>
+
+                              <div class="form-group">
+                                <div style="text-align: center">
+                                  <label for="newUserEmail"><b>Email</b></label>
+                                </div>
+                                <input type="text"
+                                       class="form-control"
+                                       id="newUserEmail"
+                                       placeholder="Email"/>
+                              </div>
+
+                              <div class="form-group">
+                                <div style="text-align: center">
+                                  <label for="newUserPassword"><b>Password</b></label>
+                                </div>
+                                <input type="text"
+                                       class="form-control"
+                                       id="newUserPassword"
+                                       placeholder="Password"/>
+                              </div>
+
+                              <div class="form-group">
+                                <label for="addRoles" class="fs-5 fw-bold pb-0 pt-2">Role</label>
+                                <select class="custom-select form-control" size="2" id="addRoles"
+                                        multiple required>
+                                </select>
+                              </div>
+                              <div>
+                                <button class="btn btn-success btn-lg my-2" type="submit">
+                                  Add new user
+                                </button>
+                              </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="webjars/jquery/3.6.1/jquery.js"></script>
+<script src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/new.js"></script>
+<script type="text/javascript" src="/profile.js"></script>
+</body>
+</html>
