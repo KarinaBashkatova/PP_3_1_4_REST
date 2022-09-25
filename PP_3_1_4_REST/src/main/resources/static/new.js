@@ -1,10 +1,10 @@
 $(async function () {
-    await addNewUser()
+    await newUser()
 })
+
 const newUserForm = document.forms['newUserForm']
 
-
-async function addNewUser() {
+async function newUser() {
     await fetch("http://localhost:8080/admin/users/roles")
         .then(res => res.json())
         .then(roles => {
@@ -12,7 +12,7 @@ async function addNewUser() {
                 let el = document.createElement("option");
                 el.text = role.name.substring(5);
                 el.value = role.id;
-                $('#addRoles')[0].appendChild(el);
+                $('#newUserRoles')[0].appendChild(el);
             })
         })
 

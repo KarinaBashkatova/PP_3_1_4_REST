@@ -1,14 +1,12 @@
 $(async function () {
     await getTableWithUsers();
- //   headerFiller();
     getAllRoles()
     roleArray()
-    getProfile()
 })
 
 //DECLARATIONS
-const userModal = new bootstrap.Modal(document.getElementById('userModal'))
-const formUser = document.getElementById('userModal')
+const userEditModal = new bootstrap.Modal(document.getElementById('userEditModal'))
+const formEditUser = document.getElementById('userEditModal')
 const id = document.getElementById('userId')
 const username = document.getElementById('userUsername')
 const age = document.getElementById('age')
@@ -16,38 +14,20 @@ const email = document.getElementById('email')
 const password = document.getElementById('password')
 const roles = document.getElementById('roles')
 
+const userDeleteModal = new bootstrap.Modal(document.getElementById('userDeleteModal'))
+const formDeleteUser = document.getElementById('userDeleteModal')
+const idDelete = document.getElementById('userDeleteId')
+const usernameDelete = document.getElementById('userDeleteUsername')
+const ageDelete = document.getElementById('ageDelete')
+const emailDelete = document.getElementById('emailDelete')
+const passwordDelete = document.getElementById('passwordDelete')
+const rolesDelete = document.getElementById('rolesDelete')
+
 let option = ''
 let result = ''
 const url = "http://localhost:8080/admin/users"
 const tbody = document.querySelector('tbody')
 
-async function headerFiller() {
-
-    const response = await fetch("/admin/users/current")
-    if (response.ok) {
-        let json = await response.json()
-            .then(data => fillHeader(data));
-    } else {
-        alert("Ошибка HTTP: " + response.status);
-    }
-
-    function fillHeader(data) {
-
-        const placement = $('#headerName');
-        placement.innerHTML = "";
-        data.forEach(({username, roles}) => {
-            let userName = data.username + " with roles ";
-            let userRoles = "";
-            roles.forEach((role) => {
-                userRoles = userRoles + role.name.substring(5) + " ";
-            })
-            const element = document.createElement("div");
-            element.innerHTML = data.username + " with roles " + userRoles;
-            placement.append(element)
-
-        })
-    }
-}
 //ALL-USERS TABLE
 const getTableWithUsers = (users) => {
     users.forEach(user => {
@@ -133,6 +113,7 @@ on(document, 'click', '.btnEdit', e => {
     const ageForm = target.children[2].innerHTML
     const emailForm = target.children[3].innerHTML
     const passwordForm = target.children[4].innerHTML
+    id.value = idForm
     username.value =  usernameForm
     age.value =  ageForm
     email.value =  emailForm
@@ -140,7 +121,7 @@ on(document, 'click', '.btnEdit', e => {
     roles.value = getAllRoles(roles)
 
     option = 'edit'
-    userModal.show()
+    userEditModal.show()
 })
 
 //OPEN DELETE-MODAL
@@ -151,22 +132,23 @@ on(document, 'click', '.btnDelete', e => {
     const ageForm = target.children[2].innerHTML
     const emailForm = target.children[3].innerHTML
     const passwordForm = target.children[4].innerHTML
-    username.value =  usernameForm
-    age.value =  ageForm
-    email.value =  emailForm
-    password.value =  passwordForm
-    roles.value = getAllRoles(roles)
+    const rolesForm = target.children[5].innerHTML
+    idDelete.value = idForm
+    usernameDelete.value =  usernameForm
+    ageDelete.value =  ageForm
+    emailDelete.value =  emailForm
+    passwordDelete.value =  passwordForm
+    rolesDelete.value = rolesForm.toString()
     option = 'delete'
-    userModal.show()
+    userDeleteModal.show()
 })
 
-//SUBMIT FOR MODALS
-formUser.addEventListener('submit', (e)=> {
+//SUBMIT FOR EDIT-MODAL
+formEditUser.addEventListener('submit', (e)=> {
     let options = document.querySelector('#roles');
     let setRoles = roleArray(options)
     e.preventDefault()
-    if (option === 'edit') {
-        fetch(url + '/' + idForm, {
+    fetch(url + '/' + idForm, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -179,20 +161,21 @@ formUser.addEventListener('submit', (e)=> {
                 roles: setRoles
             })
         })
-            .then(data => getTableWithUsers(data))
-            .then(refreshUsersTable)
-        userModal.hide()
-    }
-    if (option === 'delete') {
-        fetch(url + '/' + idForm, {
+            .then(data => refreshUsersTable(data))
+        userEditModal.hide()
+    })
+
+//SUBMIT FOR DELETE-MODAL
+formDeleteUser.addEventListener('submit', (e)=> {
+    let options = document.querySelector('#rolesDelete');
+    roleArray(options);
+    e.preventDefault()
+    fetch(url + '/' + idForm, {
             method: 'DELETE'
         })
-            .then(data => getTableWithUsers(data))
-            .then(refreshUsersTable)
-        userModal.hide()
-    }
+        .then(data => refreshUsersTable(data))
+        userDeleteModal.hide()
 })
-
 
 
 

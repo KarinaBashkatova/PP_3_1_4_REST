@@ -12,8 +12,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.services.UserDetailServ;
 
-import java.security.AuthProvider;
-
 @Configuration
 @EnableWebSecurity // помечаем конфиг.класс для spring security, обязательно наследуем этот класс от WebSecurityConfigurerAdapter
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -64,30 +62,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutSuccessUrl("/auth/login")
                 .permitAll();
     }
-
-
-    // аутентификация inMemory
-//    @Bean
-  //  @Override
-    //public UserDetailsService userDetailsService() {
-  //      UserDetails user =
- //               User.withDefaultPasswordEncoder()
-   //                     .username("user")
-     //                   .password("user")
-       //                 .roles("USER")
-         //               .build();
-
-    //    return new InMemoryUserDetailsManager(user);
-   // }
-
-
-    // jdbc-аутентификация
-//    @Bean
-//    public JdbcUserDetailsManager users(DataSource dataSource) {
-//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-//
-//         return jdbcUserDetailsManager;
-//    }
 
     // DAO authentication provider
     @Bean

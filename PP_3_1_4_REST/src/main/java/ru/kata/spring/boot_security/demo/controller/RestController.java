@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
-import ru.kata.spring.boot_security.demo.services.UserDetailServ;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.util.List;
@@ -25,14 +23,11 @@ public class RestController {
 
     private final UserService userService;
 
-    private final UserDetailServ userDetailServ;
-
     private final RoleService roleService;
 
     @Autowired
-    public RestController(UserService userService, UserDetailServ userDetailServ, RoleService roleService) {
+    public RestController(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.userDetailServ = userDetailServ;
         this.roleService = roleService;
     }
 
@@ -52,19 +47,11 @@ public class RestController {
         }
     }
 
-//    @GetMapping("/admin/users/current")
-//    public ResponseEntity<?> getUser() {
-//        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-//        User currentUser = userDetailServ.loadUserByUsername(name).getUser();
-//            return new ResponseEntity<>(currentUser, HttpStatus.OK);
-//    }
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public User addNewUser(@RequestBody User user) {
         userService.saveUser(user);
-        User newUser = userService.showUser(user.getId());
-        return newUser;
+        return userService.showUser(user.getId());
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -80,10 +67,6 @@ public class RestController {
         userService.delete(id);
     }
 
-    @GetMapping("/by")
-    public User getByUsername(@RequestParam String username) {
-        return userDetailServ.loadUserByUsername(username).getUser();
-    }
 
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> getRoles() {
